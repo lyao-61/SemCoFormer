@@ -132,12 +132,9 @@ def alter_sparse(x, sparse_size=8):
         # padding²ÎÊý£º(left, right, top, bottom)
         x = F.pad(x, (0, pad_w, 0, pad_h))
     Hp, Wp = H + pad_h, W + pad_w
-    # ÏÈ±ä»»Î¬¶È·½±ã·Ö¿é
     x = x.view(B, C, Hp // sparse_size, sparse_size, Wp // sparse_size, sparse_size)
-    # µ÷ÕûÎ¬¶ÈË³Ðò£¬½«¿éÎ¬¶ÈºÏ²¢µ½batchÎ¬¶È
     x = x.permute(0, 2, 4, 3, 5, 1).contiguous()  # [B, H_blocks, W_blocks, block_H, block_W, C]
     x = x.view(-1, sparse_size, sparse_size, C)  # ºÏ²¢¿éÎª´óbatch
-    # ×ª»»Îª [batch_blocks, C, block_H, block_W]
     x = x.permute(0, 3, 1, 2).contiguous()
     return x, H, W, Hp, Wp
 
@@ -205,15 +202,6 @@ class Sparse_Self_Attention(nn.Module):
         x_befor = x.flatten(2).transpose(1, 2)
         B, N, H, W = x.shape
         if self.ls:
-            # x, Ho, Hp, C = alter_sparse(x, self.sparse_size)
-            # Bf, Nf, Hf, Wf = x.shape
-            # x = x.flatten(2).transpose(1, 2)
-            # x = self.attn(self.norm1(x))
-            # x = x.transpose(1, 2).reshape(Bf, Nf, Hf, Wf)
-            # x = alter_unsparse(x, Ho, Hp, C, self.sparse_size)
-            # x = x.flatten(2).transpose(1, 2)
-            # x = x_befor + self.drop_path(self.gamma_1 * x)
-            # x = x + self.drop_path(self.gamma_2 * self.mlp(self.norm2(x), H, W))
             x_sparse, H, W, Hp, Wp = alter_sparse(x, sparse_size=self.sparse_size)
             x_sparse_flat = x_sparse.flatten(2).transpose(1, 2)
             x_attn = self.attn(self.norm1(x_sparse_flat))
@@ -223,15 +211,6 @@ class Sparse_Self_Attention(nn.Module):
 
             x = x_befor + self.drop_path(self.gamma_1 * x_unsparse_flat)
         else:
-            # x, Ho, Hp, C = alter_sparse(x, self.sparse_size)
-            # Bf, Nf, Hf, Wf = x.shape
-            # x = x.flatten(2).transpose(1, 2)
-            # x = self.attn(self.norm1(x))
-            # x = x.transpose(1, 2).reshape(Bf, Nf, Hf, Wf)
-            # x = alter_unsparse(x, Ho, Hp, C, self.sparse_size)
-            # x = x.flatten(2).transpose(1, 2)
-            # x = x_befor + self.drop_path(x)
-            # x = x + self.drop_path(self.mlp(self.norm2(x), H, W))
             x_sparse, H, W, Hp, Wp = alter_sparse(x, sparse_size=self.sparse_size)
             x_sparse_flat = x_sparse.flatten(2).transpose(1, 2)
 
