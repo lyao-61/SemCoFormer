@@ -47,3 +47,9 @@ Data/
 │   ├── AGP_annotation_5_test.txt
 │   └── ...
 ```
+### 3. Training
+1. Prepare the configuration file with your own paths and hyperparameters (see `Tools/config` for an example).
+2. Run training:
+   ```bash
+   python main.py
+   ```
