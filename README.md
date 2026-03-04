@@ -22,3 +22,27 @@ conda create -n semco python=3.10
 conda activate semcoformer
 
 pip install -r requirements.txt
+
+### 2. Dataset Preparation
+
+The dataset should be organized as follows:
+
+Data/
+├── VRP/
+│   └── object_features_resnet/
+│   └── object_features_semantic/
+│   └── object_features_spatial/
+│   └── pair_features_resnet/
+│   └── predicate_features_semantic/
+│   └── VRP_annotation_5_train.txt
+│   └── VRP_annotation_5_test.txt
+│   └── ...
+├── AGP/
+│   └── object_features_resnet/
+│   └── object_features_semantic/
+│   └── object_features_spatial/
+│   └── pair_features_resnet/
+│   └── predicate_features_semantic/
+│   └── AGP_annotation_5_train.txt
+│   └── AGP_annotation_5_test.txt
+│   └── ...
