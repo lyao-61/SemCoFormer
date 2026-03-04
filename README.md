@@ -3,7 +3,7 @@ Toward Semantic Coherent Visual Relationship Forecasting
 ---
 
 ## Abstract
-Visual Relationship Forecasting (VRF) in video aims to anticipate relations among objects without observing future visual content. 
+> Visual Relationship Forecasting (VRF) in video aims to anticipate relations among objects without observing future visual content. 
 The task relies on capturing and modeling the semantic coherence in object interactions, as it underpins the evolution of events and scenes in videos. 
 However, existing VRF datasets offer limited support for learning such coherence due to noisy annotations in the datasets and weak correlations between different actions and relationship transitions in subject-object pair. Furthermore, existing methods struggle to distinguish similar relationships and overfit to unchanging relationships in consecutive frames.
 To address these challenges, we present SemCoBench, a benchmark that emphasizes semantic coherence for visual relationship
