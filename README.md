@@ -22,7 +22,7 @@ conda create -n semco python=3.10
 conda activate semcoformer
 
 pip install -r requirements.txt
-
+```
 ### 2. Dataset Preparation
 
 The dataset should be organized as follows:
